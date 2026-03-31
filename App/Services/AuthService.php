@@ -12,6 +12,11 @@ class AuthService {
     public function register($name, $email, $password, $role) {
         $db = Database::getConnection();
         $hashed = password_hash($password, PASSWORD_DEFAULT);
+        $stmt = $db->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt->execute([$email]);
+        if ($stmt->fetch()) {
+            return "User '$name' already exists in database!";
+        }
         $stmt = $db->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)");
         $stmt->execute([$name, $email, $hashed, $role]);
         return "User '$name' registered in database!";
