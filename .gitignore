@@ -1,0 +1,9 @@
+# Ignore log files
+*.log
+.env
+*.cache
+.vscode/
+.DS_Store
+Thumbs.db
+/vendor/
+config.php
